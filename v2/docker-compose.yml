@@ -1,0 +1,53 @@
+version: '3.5'
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: Dockerfile-nginx
+    restart: on-failure
+    ports:
+      - "8080:80"
+    environment:
+      - NGINX_HOST=www.estiam.com
+      - NGINX_PORT=80
+    command: ["/bin/bash", "/docker-entrypoint.sh"]
+    depends_on:
+      - php
+      - mariadb
+    links:
+      - php
+      - mariadb
+    volumes:
+      - nginx-html1:/var/www/html:rw
+      - nginx-logs1:/var/log/nginx:rw
+      
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile-php
+    restart: on-failure
+    ports:
+      - "9000"
+    links:
+      - mariadb
+    command: ["/bin/bash", "/docker-entrypoint.sh"]
+    
+  mariadb:
+    image: mariadb:10.2
+    restart: on-failure
+    volumes:
+      - mariadb-store1:/var/lib/mysql:rw
+      - mariadb-logs1:/var/log/mysql:rw
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=estiam
+      - MYSQL_PASSWORD=estiam
+      - MYSQL_DATABASE=estiam
+    ports:
+      - "3306"
+volumes:
+  mariadb-store1:
+  mariadb-logs1:
+  nginx-html1:
+  nginx-logs1:
+  driver:

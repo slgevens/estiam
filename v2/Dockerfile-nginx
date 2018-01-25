@@ -1,0 +1,22 @@
+FROM debian:stretch-slim
+
+ENV NGINX_HOST=www.estiam.com \
+    NGINX_PORT=80
+
+RUN apt-get update
+RUN apt-get install -y nginx=1.10.3-1+deb9u1
+RUN mkdir -p /etc/nginx/sites-available/ && \
+    mkdir -p /etc/nginx/sites-enabled/ 
+
+ADD conf/nginx-site.conf /etc/nginx/sites-available/default.conf
+RUN rm /etc/nginx/sites-available/default
+RUN rm /etc/nginx/sites-enabled/default
+RUN ln -s /etc/nginx/sites-available/default.conf /etc/nginx/sites-enabled/default.conf
+
+VOLUME nginx-html1:/var/www/html:rw
+VOLUME nginx-logs1:/var/log/nginx:rw
+
+EXPOSE 80
+
+COPY entrypoints/entry-nginx.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
