@@ -11,7 +11,7 @@ docker volume create mariadb-store1
 Add to your host `hosts` file
 
 ```configuration
-127.0.0.1 www.estiam.com
+127.0.0.1 estiam.com
 ```
 
 ## Build
