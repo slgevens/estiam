@@ -1,8 +1,5 @@
 FROM debian:stretch-slim
 
-ENV NGINX_HOST=www.estiam.com \
-    NGINX_PORT=80
-
 RUN apt-get update
 RUN apt-get install -y nginx=1.10.3-1+deb9u1
 RUN mkdir -p /etc/nginx/sites-available/ && \

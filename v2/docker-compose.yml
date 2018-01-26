@@ -16,7 +16,6 @@ services:
       - mariadb
     links:
       - php
-      - mariadb
     volumes:
       - nginx-html1:/var/www/html:rw
       - nginx-logs1:/var/log/nginx:rw
@@ -26,11 +25,11 @@ services:
       context: .
       dockerfile: Dockerfile-php
     restart: on-failure
-    ports:
-      - "9000"
     links:
-      - mariadb
+      - mariadb      
     command: ["/bin/bash", "/docker-entrypoint.sh"]
+    volumes:
+      - nginx-html1:/var/www/html:rw
     
   mariadb:
     image: mariadb:10.2
@@ -43,8 +42,7 @@ services:
       - MYSQL_USER=estiam
       - MYSQL_PASSWORD=estiam
       - MYSQL_DATABASE=estiam
-    ports:
-      - "3306"
+      
 volumes:
   mariadb-store1:
   mariadb-logs1:
