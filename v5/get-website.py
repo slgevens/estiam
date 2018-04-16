@@ -9,6 +9,7 @@ def main(args):
 	r = args.get("url")
 	json = r.json
 	return {"json": json}
-# print r.json()
+	print r.json()
 
+main
 # print str(sys.argv)
