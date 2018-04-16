@@ -1,11 +1,12 @@
 import requests
 import sys
 
-arg = sys.argv[1]
+# arg = sys.argv[1]
 
 # URL https://api.github.com/events
-def api(arg):
-	r = requests.get(arg)
+def main(args):
+	# r = requests.get(arg)
+	r = args.get("url")
 	json = r.json
 	return {"json": json}
 # print r.json()
