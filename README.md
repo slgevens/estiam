@@ -6,3 +6,4 @@ This repo will be used for estiam courses purpose
 
 [v2 - Docker Compose](./v2)
 
+[v3 - Docker Swarm](./v3)
